@@ -1,8 +1,9 @@
+import { Request, Response, NextFunction } from 'express'
 
 const productController = {
-  index: (_req:any, res:any, next:any) => {
+  index: (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json("Show products list")
+      res.json('Show products list')
     } catch (error) {
       next({
         status: 400,
@@ -11,36 +12,36 @@ const productController = {
       })
     }
   },
-  findById: (_req:any, res:any, next:any) => {
+  findById: (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json("Show product find by ID")
+      res.json('Show product find by ID')
     } catch (error) {
       next({
         status: 400,
         errorContent: error,
-        message: "We can't find the product"
+        message: 'We can\'t find the product'
       })
     }
   },
-  create: (_req:any, res:any, next:any) => {
+  create: (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json("Create new product")
+      res.json('Create new product')
     } catch (error) {
       next({
         status: 400,
         errorContent: error,
-        message: "Could not create the product"
+        message: 'Could not create the product'
       })
     }
   },
-  update: (_req:any, res:any, next:any) => {
+  update: (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json("Update product by ID")
+      res.json('Update product by ID')
     } catch (error) {
       next({
         status: 400,
         errorContent: error,
-        message: "We can't update the product"
+        message: 'We can\'t update the product'
       })
     }
   }

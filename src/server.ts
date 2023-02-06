@@ -1,10 +1,10 @@
 import app from './app'
 import { env } from 'process'
 
-const PORT = env.PORT
+const PORT = (env.PORT !== undefined && env.PORT !== null)
   ? +env.PORT
   : 3000
-const HOSTNAME = env.HOTNAME
+const HOSTNAME = (env.HOTNAME !== undefined && env.HOTNAME !== null)
   ? env.HOTNAME
   : 'localhost'
 

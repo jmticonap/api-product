@@ -3,16 +3,16 @@ import productController from '../controllers/product.controller'
 
 const route = express.Router()
 
-//Page with list of products
+// Page with list of products
 route.get('/', productController.index)
 
-//Show especific product selected by id
+// Show especific product selected by id
 route.get('/:id', productController.findById)
 
-//Create new product
+// Create new product
 route.post('/', productController.create)
 
-//Update especific product by id
+// Update especific product by id
 route.put('/:id', productController.update)
 
 export default route
