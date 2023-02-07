@@ -1,31 +1,27 @@
 import { DataSource } from 'typeorm'
-import { env } from 'process'
+import { getCheckedEnvParams } from './helpers'
+import { ProductEntity } from './entities/product.entity'
 
-const getCheckedDbParams = (paramName: string): string => {
-  const paramVal: string = env[paramName] ?? ''
-  if (paramVal !== undefined && paramVal !== null) {
-    return paramVal
-  } else {
-    throw new Error(`${paramName} must not be undefined or null`)
-  }
+import * as dotenv from 'dotenv'
+if (getCheckedEnvParams('NODE_ENV') === 'DEV') {
+  dotenv.config()
 }
 
-const host: string = getCheckedDbParams('DB_HOTNAME')
-const port: number = +getCheckedDbParams('DB_PORT')
-const username: string = getCheckedDbParams('DB_USERNAME')
-const password: string = getCheckedDbParams('DB_PASSWORD')
-const database: string = getCheckedDbParams('DB_NAME')
+const host: string = getCheckedEnvParams('DB_HOTNAME')
+const port: number = +getCheckedEnvParams('DB_PORT')
+const username: string = getCheckedEnvParams('DB_USERNAME')
+const password: string = getCheckedEnvParams('DB_PASSWORD')
+const database: string = getCheckedEnvParams('DB_NAME')
 
-const PostgresDataSource = new DataSource({
+export const PostgresDataSource = new DataSource({
   type: 'postgres',
   host,
   port,
   username,
   password,
   database,
+  synchronize: true,
   entities: [
-    // ....
+    ProductEntity
   ]
 })
-
-export default PostgresDataSource
