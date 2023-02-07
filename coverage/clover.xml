@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1675744850789" clover="3.2.0">
+  <project timestamp="1675744850789" name="All files">
+    <metrics statements="21" coveredstatements="20" conditionals="11" coveredconditionals="9" methods="1" coveredmethods="1" elements="33" coveredelements="30" complexity="0" loc="21" ncloc="21" packages="1" files="2" classes="2"/>
+    <file name="data-source.ts" path="/home/juancho/Programming/Tekton/api-product/src/data-source.ts">
+      <metrics statements="13" coveredstatements="13" conditionals="1" coveredconditionals="1" methods="0" coveredmethods="0"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="14" count="1" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="31" count="1" type="stmt"/>
+    </file>
+    <file name="helpers.ts" path="/home/juancho/Programming/Tekton/api-product/src/helpers.ts">
+      <metrics statements="8" coveredstatements="7" conditionals="10" coveredconditionals="8" methods="1" coveredmethods="1"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="3" count="2" type="stmt"/>
+      <line num="4" count="8" type="cond" truecount="1" falsecount="0"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="7" type="cond" truecount="3" falsecount="1"/>
+      <line num="8" count="7" type="cond" truecount="4" falsecount="1"/>
+      <line num="9" count="7" type="stmt"/>
+      <line num="11" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>
