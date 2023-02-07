@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import * as fs from 'fs'
 import express from 'express'
 import morgan from 'morgan'
