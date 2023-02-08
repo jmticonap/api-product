@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv'
-import { getCheckedEnvParams } from './src/helpers'
+import { getCheckedEnvParams } from '../src/helpers'
 
 beforeAll(() => {
   dotenv.config()

@@ -1,26 +1,51 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { CategoryEntity } from './category.entity'
 
 @Entity('product')
 export class ProductEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column()
+  @Column({
+    nullable: false,
+    unique: true
+  })
   name!: string
 
-  @Column()
+  @Column({
+    nullable: false
+  })
   description!: string
 
-  @Column()
-  genericCategory!: string
+  @Column({
+    nullable: false,
+    default: true
+  })
+  isActive!: boolean
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   brand!: string
 
-  @Column('float')
+  @Column('float',
+    {
+      default: 0
+    }
+  )
   stock!: number
 
-  @Column('float')
+  @Column('float',
+    {
+      default: 0
+    }
+  )
   price!: number
+
+  @ManyToOne(
+    () => CategoryEntity,
+    (categoryEntity) => categoryEntity.products
+  )
+  categoryEntity!: CategoryEntity
 }

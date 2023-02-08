@@ -1,20 +1,28 @@
 import { Request, Response, NextFunction } from 'express'
+import productService from '../services/product.service'
 
 const productController = {
-  index: (_req: Request, res: Response, next: NextFunction) => {
+  index: async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json('Show products list')
+      const products = await productService.findAll()
+      res
+        .status(200)
+        .json(products)
     } catch (error) {
       next({
         status: 400,
         errorContent: error,
-        message: "We can't show the list od products"
+        message: "We can't show the list of products"
       })
     }
   },
-  findById: (_req: Request, res: Response, next: NextFunction) => {
+  findById: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json('Show product find by ID')
+      const { id } = req.params
+      const product = await productService.findById(+id)
+      res
+        .status(200)
+        .json(product)
     } catch (error) {
       next({
         status: 400,
@@ -23,9 +31,13 @@ const productController = {
       })
     }
   },
-  create: (_req: Request, res: Response, next: NextFunction) => {
+  create: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json('Create new product')
+      const product = req.body
+      const newProduct = await productService.create(product)
+      res
+        .status(200)
+        .json(newProduct)
     } catch (error) {
       next({
         status: 400,

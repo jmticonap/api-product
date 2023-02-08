@@ -17,7 +17,7 @@ app.use(morgan('dev', {
 }))
 app.use(morgan('dev'))
 
-app.use('/product', productRoute)
+app.use('/api/product', productRoute)
 
 app.use(errorHandler)
 
