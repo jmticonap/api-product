@@ -30,14 +30,14 @@ describe('ProductService', () => {
     expect(newProduct.name).toBe(product.name)
   })
 
-  test('Get product by id [1]', async () => {
+  test('Get product by id=1', async () => {
     const id = 1
     const product = await productService.findById(id)
     expect(product).toBeInstanceOf(ProductEntity)
     expect(product.id).toBe(id)
   })
 
-  test('Update product of id=1', async () => {
+  test('Update product by id=1', async () => {
     const id = 1
     const changes = {
       name: 'Product name changed'

@@ -25,14 +25,14 @@ describe('CategoryService', () => {
     expect(newCategory.name).toBe(category.name)
   })
 
-  test('Get category by id [1]', async () => {
+  test('Get category by id=1', async () => {
     const id = 1
     const category = await categoryService.findById(id)
     expect(category).toBeInstanceOf(CategoryEntity)
     expect(category.id).toBe(id)
   })
 
-  test('Update category of id=1', async () => {
+  test('Update category by id=1', async () => {
     const id = 1
     const changes = {
       name: 'generics changed'

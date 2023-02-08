@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "NODE_ENV=DEV ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "node build/src/server.js",
+    "start": "NODE_ENV=PROD node build/src/server.js",
     "test": "NODE_ENV=TEST jest --watch",
     "lint": "ts-standard"
   },
