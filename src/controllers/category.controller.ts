@@ -1,48 +1,49 @@
 import { Request, Response, NextFunction } from 'express'
-import productService from '../services/product.service'
+import { CategoryEntity } from '../entities/category.entity'
+import categoryService from '../services/category.service'
 
-const productController = {
+const categoryController = {
   index: async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const products = await productService.findAll()
+      const categories = await categoryService.findAll()
       res
         .status(200)
-        .json(products)
+        .json(categories)
     } catch (error) {
       next({
         status: 400,
         errorContent: error,
-        message: "We can't show the list of products"
+        message: "We can't show the list of categories"
       })
     }
   },
   findById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params
-      const product = await productService.findById(+id)
+      const category = await categoryService.findById(+id)
       res
         .status(200)
-        .json(product)
+        .json(category)
     } catch (error) {
       next({
         status: 400,
         errorContent: error,
-        message: 'We can\'t find the product'
+        message: 'We can\'t find the category'
       })
     }
   },
   create: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const product = req.body
-      const newProduct = await productService.create(product)
+      const category: CategoryEntity = req.body as CategoryEntity
+      const newCategory = await categoryService.create(category)
       res
         .status(200)
-        .json(newProduct)
+        .json(newCategory)
     } catch (error) {
       next({
         status: 400,
         errorContent: error,
-        message: 'Could not create the product'
+        message: 'Could not create the category'
       })
     }
   },
@@ -50,7 +51,7 @@ const productController = {
     try {
       const { id } = req.params
       const changes: Object = req.body
-      const result = await productService.updateById(+id, changes)
+      const result = await categoryService.updateById(+id, changes)
 
       res
         .status(200)
@@ -67,4 +68,4 @@ const productController = {
   }
 }
 
-export default productController
+export default categoryController

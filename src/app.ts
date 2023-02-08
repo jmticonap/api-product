@@ -7,6 +7,7 @@ import cors from 'cors'
 
 import errorHandler from './middlewares/error.middleware'
 import productRoute from './routes/product.route'
+import categoryRoute from './routes/category.route'
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(morgan('dev', {
 app.use(morgan('dev'))
 
 app.use('/api/product', productRoute)
+app.use('/api/category', categoryRoute)
 
 app.use(errorHandler)
 
