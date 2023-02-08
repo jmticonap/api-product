@@ -47,5 +47,5 @@ export class ProductEntity {
     () => CategoryEntity,
     (categoryEntity) => categoryEntity.products
   )
-  categoryEntity!: CategoryEntity
+  categoryEntity!: Promise<CategoryEntity>
 }

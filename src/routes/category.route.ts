@@ -2,6 +2,7 @@
 import express from 'express'
 import categoryController from '../controllers/category.controller'
 import apicache from 'apicache'
+import categoryCreateValidator from '../validators/categoryCreate.validator'
 
 const route = express.Router()
 
@@ -14,7 +15,7 @@ route.get('/', cache('5 minutes'), categoryController.index)
 route.get('/:id', cache('1 minutes'), categoryController.findById)
 
 // Create new category
-route.post('/', categoryController.create)
+route.post('/', categoryCreateValidator, categoryController.create)
 
 // Update especific category by id
 route.put('/:id', categoryController.update)
