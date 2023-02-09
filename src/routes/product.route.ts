@@ -9,7 +9,7 @@ const route = express.Router()
 const cache = apicache.middleware
 
 // Page with list of products
-route.get('/', cache('5 minutes'), productController.index)
+route.get('/', productController.index)
 
 // Show especific product selected by id
 route.get('/:id', cache('1 minutes'), productController.findById)

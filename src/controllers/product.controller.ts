@@ -1,10 +1,16 @@
 import { Request, Response, NextFunction } from 'express'
 import productService from '../services/product.service'
+import { LinkPage } from '../types'
 
 const productController = {
-  index: async (_req: Request, res: Response, next: NextFunction) => {
+  index: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const products = await productService.findAll()
+      const link: LinkPage = {
+        offset: req.query.offset !== undefined ? +req.query.offset : 0,
+        limit: req.query.limit !== undefined ? +req.query.limit : 20
+      } as unknown as LinkPage
+
+      const products = await productService.findAll(link)
       res
         .status(200)
         .json(products)
