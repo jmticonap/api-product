@@ -1,6 +1,8 @@
 import app from './app'
 import { env } from 'process'
 import { PostgresDataSource } from './data-source'
+import { getCheckedEnvParams } from './helpers'
+import { nitializerDB } from './initializer'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function main () {
@@ -13,6 +15,10 @@ async function main () {
 
   try {
     await PostgresDataSource.initialize()
+
+    if (getCheckedEnvParams('NODE_ENV') === 'DEV') {
+      await nitializerDB() // some data for pagination
+    }
 
     app.listen(PORT, HOSTNAME, () => {
       console.log(`Server is running at\nhttp://${HOSTNAME}:${PORT}`)

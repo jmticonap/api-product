@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CategoryEntity } from './category.entity'
 
 @Entity('product')
@@ -45,7 +45,9 @@ export class ProductEntity {
 
   @ManyToOne(
     () => CategoryEntity,
-    (categoryEntity) => categoryEntity.products
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
+    (category) => category.products
   )
-  categoryEntity!: Promise<CategoryEntity>
+  @JoinColumn({ name: 'category_id' })
+  category!: Promise<CategoryEntity>
 }

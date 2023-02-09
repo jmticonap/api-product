@@ -7,6 +7,10 @@ const categoryCreateValidator = [
     .exists()
     .not()
     .isEmpty(),
+  check('description')
+    .exists()
+    .not()
+    .isEmpty(),
   (req: Request, res: Response, next: NextFunction): void => {
     validateResult(req, res, next)
   }

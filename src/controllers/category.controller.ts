@@ -65,6 +65,25 @@ const categoryController = {
         message: 'We can\'t update the product'
       })
     }
+  },
+  addProducts: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params
+      const { productIds } = req.body
+      const category: CategoryEntity = await categoryService.addProducts(+id, productIds)
+
+      await category.products
+
+      res
+        .status(200)
+        .json(category)
+    } catch (error) {
+      next({
+        status: 400,
+        errorContent: error,
+        message: 'We can\'t add products to the category'
+      })
+    }
   }
 }
 

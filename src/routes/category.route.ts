@@ -20,4 +20,7 @@ route.post('/', categoryCreateValidator, categoryController.create)
 // Update especific category by id
 route.put('/:id', categoryController.update)
 
+// Add products to especific category by id
+route.patch('/:id/addproducts', categoryController.addProducts)
+
 export default route

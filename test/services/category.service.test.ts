@@ -1,12 +1,25 @@
 import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../../src/data-source'
 import { CategoryEntity } from '../../src/entities/category.entity'
+import { ProductEntity } from '../../src/entities/product.entity'
 import categoryService from '../../src/services/category.service'
+import productService from '../../src/services/product.service'
 
 beforeAll(async () => {
   if (!PostgresDataSource.isInitialized) {
     await PostgresDataSource.initialize()
   }
+
+  const category = new CategoryEntity()
+  category.name = 'generics'
+  category.description = 'Category for uncategorizable products'
+  await categoryService.create(category)
+
+  const product = new ProductEntity()
+  product.brand = 'Lenovo'
+  product.name = 'Ideapad 5'
+  product.description = 'Lenovo laptop i7'
+  await productService.create(product)
 })
 
 describe('CategoryService', () => {
@@ -42,5 +55,11 @@ describe('CategoryService', () => {
 
     const category = await categoryService.findById(id)
     expect(category.name).toBe(changes.name)
+  })
+
+  test('Add products to category', async () => {
+    const category = await categoryService.addProducts(1, [1])
+    const catProducts = await category?.products
+    expect(catProducts?.length).toBe(1)
   })
 })

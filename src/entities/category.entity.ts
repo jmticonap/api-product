@@ -20,7 +20,8 @@ export class CategoryEntity {
 
   @OneToMany(
     () => ProductEntity,
-    (product) => product.categoryEntity
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
+    (product) => product.category
   )
-  products!: ProductEntity[]
+  products!: Promise<ProductEntity[]>
 }
