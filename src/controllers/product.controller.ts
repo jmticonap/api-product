@@ -16,7 +16,7 @@ const productController = {
         .json(products)
     } catch (error) {
       next({
-        status: 400,
+        status: 404,
         errorContent: error,
         message: "We can't show the list of products"
       })
@@ -31,7 +31,7 @@ const productController = {
         .json(product)
     } catch (error) {
       next({
-        status: 400,
+        status: 404,
         errorContent: error,
         message: 'We can\'t find the product'
       })

@@ -8,7 +8,6 @@ describe('DataSource', () => {
     if (!PostgresDataSource.isInitialized) {
       await PostgresDataSource.initialize()
       await PostgresDataSource.synchronize(true)
-      // await deleteAllRows(PostgresDataSource)
     }
   })
 

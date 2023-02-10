@@ -2,17 +2,14 @@ import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../../src/data-source'
 import { CategoryEntity } from '../../src/entities/category.entity'
 import { ProductEntity } from '../../src/entities/product.entity'
-// import { deleteAllRows } from '../../src/helpers'
 import categoryService from '../../src/services/category.service'
 import productService from '../../src/services/product.service'
-// import ResultSetPage from '../../src/types.d'
 
 describe('CategoryService', () => {
   beforeAll(async () => {
     if (!PostgresDataSource.isInitialized) {
       await PostgresDataSource.initialize()
       await PostgresDataSource.synchronize(true)
-      // await deleteAllRows(PostgresDataSource)
     }
 
     const category = new CategoryEntity()

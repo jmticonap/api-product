@@ -1,9 +1,6 @@
 import { env } from 'process'
 import { validationResult } from 'express-validator'
 import { Request, Response, NextFunction } from 'express'
-import { DataSource } from 'typeorm'
-import { ProductEntity } from './entities/product.entity'
-import { CategoryEntity } from './entities/category.entity'
 
 export const getCheckedEnvParams = (paramName: string): string => {
   if (paramName.length === 0) {
@@ -45,9 +42,4 @@ export const bodyCleaner = (req: Request, updatableFields: string[]): Request =>
   }
 
   return req
-}
-
-export const deleteAllRows = async (ds: DataSource): Promise<void> => {
-  await ds.createQueryBuilder().delete().from(ProductEntity).execute()
-  await ds.createQueryBuilder().delete().from(CategoryEntity).execute()
 }

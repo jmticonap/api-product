@@ -32,7 +32,7 @@ const categoryController = {
         .json(category)
     } catch (error) {
       next({
-        status: 400,
+        status: 404,
         errorContent: error,
         message: 'We can\'t find the category'
       })

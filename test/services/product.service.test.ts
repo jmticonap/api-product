@@ -1,16 +1,13 @@
 import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../../src/data-source'
 import { ProductEntity } from '../../src/entities/product.entity'
-// import { deleteAllRows } from '../../src/helpers'
 import productService from '../../src/services/product.service'
-// import ResultSetPage from '../../src/types.d'
 
 describe('ProductService', () => {
   beforeAll(async () => {
     if (!PostgresDataSource.isInitialized) {
       await PostgresDataSource.initialize()
       await PostgresDataSource.synchronize(true)
-      // await deleteAllRows(PostgresDataSource)
     }
 
     const product = new ProductEntity()
