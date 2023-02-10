@@ -49,6 +49,6 @@ export class ProductEntity {
     // eslint-disable-next-line @typescript-eslint/promise-function-async
     (category) => category.products
   )
-  @JoinColumn({ name: 'category_id' })
+  @JoinColumn({ name: 'categoryid' })
   category!: Promise<CategoryEntity>
 }

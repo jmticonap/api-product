@@ -14,6 +14,9 @@ route.get('/', productController.index)
 // Show especific product selected by id
 route.get('/:id', cache('1 minutes'), productController.findById)
 
+// Show a page with products filter by Category
+route.get('/by_category/:id', cache('1 minutes'), productController.findByCategory)
+
 // Create new product
 route.post('/', productCreateValidator, productController.create)
 

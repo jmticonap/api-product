@@ -38,6 +38,27 @@ const productController = {
       })
     }
   },
+  findByCategory: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params
+      const link: LinkPage = {
+        offset: req.query.offset !== undefined ? +req.query.offset : 0,
+        limit: req.query.limit !== undefined ? +req.query.limit : 20
+      } as unknown as LinkPage
+
+      const page = await productService.findByCategory(id, link)
+
+      res
+        .status(200)
+        .json(page)
+    } catch (error) {
+      next({
+        status: 404,
+        errorContent: error,
+        message: 'We can\'t find the product'
+      })
+    }
+  },
   create: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const product = req.body

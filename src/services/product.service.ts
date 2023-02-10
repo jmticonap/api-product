@@ -38,6 +38,7 @@ const productService = {
       const count = await PostgresDataSource
         .getRepository(ProductEntity)
         .createQueryBuilder()
+        .where('isactive = :active', { active: true })
         .getCount()
 
       const page: ResultSetPage<ProductEntity> = {
@@ -63,6 +64,37 @@ const productService = {
       } else {
         throw new Error('Product not found')
       }
+    } catch (error) {
+      throw new Error(String(error))
+    }
+  },
+  findByCategory: async (id: string, link: LinkPage): Promise<ResultSetPage<ProductEntity>> => {
+    try {
+      const products = await PostgresDataSource
+        .getRepository(ProductEntity)
+        .createQueryBuilder()
+        .orderBy('id')
+        .where('isactive = :active', { active: true })
+        .andWhere('categoryid = :id', { id })
+        .limit(link !== undefined ? link.limit : 20)
+        .offset(link !== undefined ? link.offset : 0)
+        .getMany()
+      const count = await PostgresDataSource
+        .getRepository(ProductEntity)
+        .createQueryBuilder()
+        .where('isactive = :active', { active: true })
+        .andWhere('categoryid = :id', { id })
+        .getCount()
+
+      const page: ResultSetPage<ProductEntity> = {
+        count,
+        limit: link !== undefined ? link.limit : 20,
+        nextOffset: link !== undefined && (link.offset + link.limit) < count ? link.offset + link.limit : link.offset,
+        previousOffset: link !== undefined && link.offset >= link.limit ? link.offset - link.limit : 0,
+        results: products
+      }
+
+      return page
     } catch (error) {
       throw new Error(String(error))
     }
