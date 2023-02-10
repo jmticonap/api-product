@@ -4,8 +4,8 @@ import { ProductEntity } from './product.entity'
 
 @Entity('category')
 export class CategoryEntity {
-  @PrimaryGeneratedColumn()
-  id!: number
+  @PrimaryGeneratedColumn('uuid')
+  id!: string
 
   @Column({
     nullable: false,

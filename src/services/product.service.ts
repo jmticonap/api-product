@@ -2,11 +2,25 @@ import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../data-source'
 import { ProductEntity } from '../entities/product.entity'
 import { LinkPage, ResultSetPage } from '../types'
+import remoteService from './remote.service'
 
 const productService = {
   create: async (product: ProductEntity): Promise<ProductEntity> => {
     try {
       return await PostgresDataSource.getRepository(ProductEntity).save(product)
+    } catch (error) {
+      throw new Error(String(error))
+    }
+  },
+  count: async (): Promise<number> => {
+    try {
+      const count = await PostgresDataSource
+        .getRepository(ProductEntity)
+        .createQueryBuilder()
+        .where('isactive = :active', { active: true })
+        .getCount()
+
+      return count
     } catch (error) {
       throw new Error(String(error))
     }
@@ -17,6 +31,7 @@ const productService = {
         .getRepository(ProductEntity)
         .createQueryBuilder()
         .orderBy('id')
+        .where('isactive = :active', { active: true })
         .limit(link !== undefined ? link.limit : 20)
         .offset(link !== undefined ? link.offset : 0)
         .getMany()
@@ -61,6 +76,46 @@ const productService = {
         .where('id = :id', { id })
         .execute()
       return result
+    } catch (error) {
+      throw new Error(String(error))
+    }
+  },
+  findGlobaly: async (link: LinkPage): Promise<ResultSetPage<ProductEntity>> => {
+    try {
+      const localCount = await productService.count()
+      const remoteCount = await remoteService.count()
+      const globalCount = localCount + remoteCount
+
+      if (link.offset >= localCount) {
+        // We use entirely data from remote
+        const remoteStart = link.offset - localCount
+        const remoteEnd = link.limit + remoteStart
+        const remoteProducts: ProductEntity[] = await remoteService.findSlice(remoteStart, remoteEnd)
+
+        const page: ResultSetPage<ProductEntity> = {
+          count: globalCount,
+          limit: link !== undefined ? link.limit : 20,
+          nextOffset: link !== undefined && (link.offset + link.limit) < globalCount ? link.offset + link.limit : link.offset,
+          previousOffset: link !== undefined && link.offset >= link.limit ? link.offset - link.limit : 0,
+          results: remoteProducts
+        }
+
+        return page
+      } else if (link.offset < localCount && link.offset + link.limit >= localCount) {
+        // We use data from local and remote
+        const page = await productService.find(link)
+        const difPage: number = link.limit - page.results.length
+        const remoteProducts: ProductEntity[] = await remoteService.findSlice(0, difPage)
+
+        page.results.push(...remoteProducts)
+
+        // FIX: nextOffset
+
+        return page
+      } else {
+        // only local data
+        return await productService.find(link)
+      }
     } catch (error) {
       throw new Error(String(error))
     }

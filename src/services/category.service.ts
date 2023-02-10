@@ -42,7 +42,7 @@ const categoryService = {
       throw new Error(String(error))
     }
   },
-  findById: async (id: number): Promise<CategoryEntity> => {
+  findById: async (id: string): Promise<CategoryEntity> => {
     try {
       const category = await PostgresDataSource
         .getRepository(CategoryEntity)

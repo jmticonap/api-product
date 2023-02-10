@@ -4,6 +4,17 @@ import categoryService from './services/category.service'
 import productService from './services/product.service'
 
 export const initializeDB = async (): Promise<void> => {
+  const cat1 = new CategoryEntity()
+  cat1.name = 'Computers'
+  cat1.description = 'catComputers empty'
+
+  const cat2 = new CategoryEntity()
+  cat2.name = 'Garden'
+  cat2.description = 'catComputers empty'
+
+  const catComputers = await categoryService.create(cat1)
+  const catGarden = await categoryService.create(cat2)
+
   for (let i = 1; i <= 10; i++) {
     const category = new CategoryEntity()
     category.name = `Category #${i}`
@@ -12,7 +23,6 @@ export const initializeDB = async (): Promise<void> => {
     await categoryService.create(category)
   }
 
-  const category1 = await categoryService.findById(1)
   for (let j = 1; j <= 40; j++) {
     const product = new ProductEntity()
     product.name = `Product #${j}`
@@ -20,12 +30,11 @@ export const initializeDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
-    product.category = Promise.resolve(category1)
+    product.category = Promise.resolve(catComputers)
 
     await productService.create(product)
   }
 
-  const category2 = await categoryService.findById(2)
   for (let j = 41; j <= 80; j++) {
     const product = new ProductEntity()
     product.name = `Product #${j}`
@@ -33,7 +42,7 @@ export const initializeDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
-    product.category = Promise.resolve(category2)
+    product.category = Promise.resolve(catGarden)
 
     await productService.create(product)
   }
@@ -45,6 +54,7 @@ export const initializeDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
+    product.isActive = Math.round(Math.random() * 100) % 3 === 0
 
     await productService.create(product)
   }

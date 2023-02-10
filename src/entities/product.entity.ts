@@ -4,8 +4,8 @@ import { CategoryEntity } from './category.entity'
 
 @Entity('product')
 export class ProductEntity {
-  @PrimaryGeneratedColumn()
-  id!: number
+  @PrimaryGeneratedColumn('uuid')
+  id!: string
 
   @Column({
     nullable: false,
@@ -19,6 +19,7 @@ export class ProductEntity {
   description!: string
 
   @Column({
+    name: 'isactive',
     nullable: false,
     default: true
   })

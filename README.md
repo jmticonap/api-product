@@ -98,7 +98,7 @@ Finally we are ready to use the app.
     			"id": 1,
     			"name": "Product #1",
     			"description": "Description empty #1",
-    			"isActive": true,
+    			"isactive": true,
     			"brand": "jmtp.dev",
     			"stock": 178,
     			"price": 49.42
@@ -114,7 +114,7 @@ Finally we are ready to use the app.
     	"id": 8,
     	"name": "Product #8",
     	"description": "Description empty #8",
-    	"isActive": true,
+    	"isactive": true,
     	"brand": "jmtp.dev",
     	"stock": 136,
     	"price": 51.13

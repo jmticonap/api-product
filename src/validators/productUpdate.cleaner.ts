@@ -5,7 +5,7 @@ import { bodyCleaner } from '../helpers'
 const updatableFields = [
   'name',
   'description',
-  'isActive',
+  'isactive',
   'brand',
   'stock',
   'price'

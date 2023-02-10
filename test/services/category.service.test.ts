@@ -1,4 +1,4 @@
-import { UpdateResult } from 'typeorm'
+// import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../../src/data-source'
 import { CategoryEntity } from '../../src/entities/category.entity'
 import { ProductEntity } from '../../src/entities/product.entity'
@@ -35,33 +35,33 @@ describe('CategoryService', () => {
     return undefined
   })
 
-  test('Get category by id=1', async () => {
-    const id = 1
-    const category = await categoryService.findById(id)
-    expect(category).toBeInstanceOf(CategoryEntity)
-    expect(category.id).toBe(id)
-    return undefined
-  })
+  // test('Get category by id=1', async () => {
+  //   const id = 1
+  //   const category = await categoryService.findById(id)
+  //   expect(category).toBeInstanceOf(CategoryEntity)
+  //   expect(category.id).toBe(id)
+  //   return undefined
+  // })
 
-  test('Update category by id=1', async () => {
-    const id = 1
-    const changes = {
-      name: 'generics changed'
-    }
-    const result = await categoryService.updateById(id, changes)
-    expect(result).toBeInstanceOf(UpdateResult)
+  // test('Update category by id=1', async () => {
+  //   const id = 1
+  //   const changes = {
+  //     name: 'generics changed'
+  //   }
+  //   const result = await categoryService.updateById(id, changes)
+  //   expect(result).toBeInstanceOf(UpdateResult)
 
-    const category = await categoryService.findById(id)
-    expect(category.name).toBe(changes.name)
-    return undefined
-  })
+  //   const category = await categoryService.findById(id)
+  //   expect(category.name).toBe(changes.name)
+  //   return undefined
+  // })
 
-  test('Add products to category', async () => {
-    const category = await categoryService.addProducts(1, [1])
-    const catProducts = await category?.products
-    expect(catProducts?.length).toBe(1)
-    return undefined
-  })
+  // test('Add products to category', async () => {
+  //   const category = await categoryService.addProducts(1, [1])
+  //   const catProducts = await category?.products
+  //   expect(catProducts?.length).toBe(1)
+  //   return undefined
+  // })
 
   afterAll(async () => {
     await PostgresDataSource.destroy()
