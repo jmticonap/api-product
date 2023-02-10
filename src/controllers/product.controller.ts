@@ -26,7 +26,7 @@ const productController = {
   findById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params
-      const product = await productService.findById(+id)
+      const product = await productService.findById(id)
       res
         .status(200)
         .json(product)
@@ -57,7 +57,7 @@ const productController = {
     try {
       const { id } = req.params
       const changes: Object = req.body
-      const result = await productService.updateById(+id, changes)
+      const result = await productService.updateById(id, changes)
 
       res
         .status(200)

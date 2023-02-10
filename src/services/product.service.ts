@@ -53,7 +53,7 @@ const productService = {
       throw new Error(String(error))
     }
   },
-  findById: async (id: number): Promise<ProductEntity> => {
+  findById: async (id: string): Promise<ProductEntity> => {
     try {
       const product: ProductEntity | null = await PostgresDataSource
         .getRepository(ProductEntity)
@@ -67,7 +67,7 @@ const productService = {
       throw new Error(String(error))
     }
   },
-  updateById: async (id: number, changes: Object): Promise<UpdateResult> => {
+  updateById: async (id: string, changes: Object): Promise<UpdateResult> => {
     try {
       const result = await PostgresDataSource
         .createQueryBuilder()

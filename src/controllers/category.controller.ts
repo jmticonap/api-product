@@ -26,7 +26,7 @@ const categoryController = {
   findById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params
-      const category = await categoryService.findById(+id)
+      const category = await categoryService.findById(id)
       res
         .status(200)
         .json(category)
@@ -57,7 +57,7 @@ const categoryController = {
     try {
       const { id } = req.params
       const changes: Object = req.body
-      const result = await categoryService.updateById(+id, changes)
+      const result = await categoryService.updateById(id, changes)
 
       res
         .status(200)
@@ -76,7 +76,7 @@ const categoryController = {
     try {
       const { id } = req.params
       const { productIds } = req.body
-      const result: Object = await categoryService.addProducts(+id, productIds)
+      const result: Object = await categoryService.addProducts(id, productIds)
 
       res
         .status(200)

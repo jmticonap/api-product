@@ -55,7 +55,7 @@ const categoryService = {
       throw new Error(String(error))
     }
   },
-  updateById: async (id: number, changes: Object): Promise<UpdateResult> => {
+  updateById: async (id: string, changes: Object): Promise<UpdateResult> => {
     try {
       const result = await PostgresDataSource
         .createQueryBuilder()
@@ -68,7 +68,7 @@ const categoryService = {
       throw new Error(String(error))
     }
   },
-  addProducts: async (id: number, productIds: number[]): Promise<{}> => {
+  addProducts: async (id: string, productIds: string[]): Promise<{}> => {
     try {
       const products: ProductEntity[] = await PostgresDataSource
         .getRepository(ProductEntity)

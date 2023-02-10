@@ -30,6 +30,7 @@ export const initializeDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
+    product.isActive = Math.round(Math.random() * 100) % 8 !== 0
     product.category = Promise.resolve(catComputers)
 
     await productService.create(product)
@@ -42,6 +43,7 @@ export const initializeDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
+    product.isActive = Math.round(Math.random() * 100) % 8 !== 0
     product.category = Promise.resolve(catGarden)
 
     await productService.create(product)
@@ -54,7 +56,7 @@ export const initializeDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
-    product.isActive = Math.round(Math.random() * 100) % 3 === 0
+    product.isActive = Math.round(Math.random() * 100) % 8 !== 0
 
     await productService.create(product)
   }
