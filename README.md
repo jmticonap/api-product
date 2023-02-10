@@ -21,7 +21,7 @@ Finally we are ready to use the app.
 
 ## Using end-points
 - ### Category:
-    ##### /api/category/ [GET]
+    ##### /api/category/ `[GET]`
     Returns a page with 20 results for default but we can use path query "?offset=5&limit=5" to customize the result and get the information paginated.
     ```json
     {
@@ -39,7 +39,7 @@ Finally we are ready to use the app.
 	    ]
     }
     ```
-    ##### /api/category/<ID> [GET]
+    ##### /api/category/`<ID>` `[GET]`
     Allow to get a single category search by it's ID.
     ```json
     {
@@ -48,7 +48,7 @@ Finally we are ready to use the app.
 		"description": "Description empty"
 	}
     ```
-    ##### /api/category/ [POST]
+    ##### /api/category/ `[POST]`
     Allow to send the new category data and take keep in the persistence layer.
     ```json
     {
@@ -57,7 +57,7 @@ Finally we are ready to use the app.
     }
     ```
     Then answer is the entity of category as a JSON
-    ##### /api/category/<ID> [PUT]
+    ##### /api/category/`<ID>` `[PUT]`
     Allow to send those fields of category that we want to update. [name | description]
     ```json
     {
@@ -71,7 +71,7 @@ Finally we are ready to use the app.
     	"affected": 1
     }
     ```
-    ##### /api/category/<ID>/addproducts [PATCH]
+    ##### /api/category/`<ID>`/addproducts `[PATCH]`
     Allow to add products to the given category by the ID
     ```json
     {
@@ -85,7 +85,7 @@ Finally we are ready to use the app.
     }
     ```
 - ### Product:
-    ##### /api/product/ [GET]
+    ##### /api/product/ `[GET]`
     Returns a page with 20 results for default but we can use path query "?offset=5&limit=5" to customize the result and get the information paginated.
     ```json
     {
@@ -107,7 +107,7 @@ Finally we are ready to use the app.
     	]
     }
     ```
-    ##### /api/property/<ID> [GET]
+    ##### /api/property/`<ID>` `[GET]`
     Allow to get a single product search by it's ID.
     ```json
     {
@@ -120,7 +120,7 @@ Finally we are ready to use the app.
     	"price": 51.13
     }
     ```
-    ##### /api/property/by_category/<ID> [GET]
+    ##### /api/property/by_category/`<ID>` `[GET]`
     Allow to get a page with products filter by category ID. It's allow the use of query for pagination (offset, limit)
     ```json
     {
@@ -142,7 +142,7 @@ Finally we are ready to use the app.
     	]
     }
     ```
-    ##### /api/product/ [POST]
+    ##### /api/product/ `[POST]`
     Allow to send the new product data and take keep in the persistence layer.
     ```json
     {
@@ -152,7 +152,7 @@ Finally we are ready to use the app.
     }
     ```
     Then answer is the entity of category as a JSON with the missing field with it's default values
-    ##### /api/product/<ID> [PUT]
+    ##### /api/product/`<ID>` `[PUT]`
     Allow to send those fields of product that we want to update. [name | description | brand | stock | isActive | price]
     ```json
     {
