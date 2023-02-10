@@ -76,13 +76,11 @@ const categoryController = {
     try {
       const { id } = req.params
       const { productIds } = req.body
-      const category: CategoryEntity = await categoryService.addProducts(+id, productIds)
-
-      await category.products
+      const result: Object = await categoryService.addProducts(+id, productIds)
 
       res
         .status(200)
-        .json(category)
+        .json(result)
     } catch (error) {
       next({
         status: 400,

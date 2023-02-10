@@ -68,7 +68,7 @@ const categoryService = {
       throw new Error(String(error))
     }
   },
-  addProducts: async (id: number, productIds: number[]): Promise<CategoryEntity> => {
+  addProducts: async (id: number, productIds: number[]): Promise<{}> => {
     try {
       const products: ProductEntity[] = await PostgresDataSource
         .getRepository(ProductEntity)
@@ -78,23 +78,28 @@ const categoryService = {
           }
         })
 
+      if (productIds.length !== products.length) throw new Error('One of the products don\'t exist')
+
       const category: CategoryEntity | null = await PostgresDataSource
         .getRepository(CategoryEntity)
         .createQueryBuilder('c')
         .where('c.id = :id', { id })
         .getOne()
 
-      if (category == null) {
-        throw new Error('Category not found')
-      }
+      if (category == null) throw new Error('Category not found')
+
       const catProducts = await category.products
+
       if (catProducts == null) {
         category.products = Promise.resolve(products)
       } else {
+        // TODO: be sure those products there are already part of the category
         (await category.products).push(...products)
       }
-
-      return await PostgresDataSource.manager.save(category)
+      await PostgresDataSource.manager.save(category)
+      return {
+        affected: products.length
+      }
     } catch (error) {
       throw new Error(String(error))
     }
