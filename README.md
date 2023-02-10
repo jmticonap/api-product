@@ -98,7 +98,7 @@ Finally we are ready to use the app.
     			"id": 1,
     			"name": "Product #1",
     			"description": "Description empty #1",
-    			"isactive": true,
+    			"isActive": true,
     			"brand": "jmtp.dev",
     			"stock": 178,
     			"price": 49.42
@@ -114,10 +114,32 @@ Finally we are ready to use the app.
     	"id": 8,
     	"name": "Product #8",
     	"description": "Description empty #8",
-    	"isactive": true,
+    	"isActive": true,
     	"brand": "jmtp.dev",
     	"stock": 136,
     	"price": 51.13
+    }
+    ```
+    ##### /api/property/by_category/<ID> [GET]
+    Allow to get a page with products filter by category ID. It's allow the use of query for pagination (offset, limit)
+    ```json
+    {
+    	"count": 33,
+    	"limit": 10,
+    	"nextOffset": 30,
+    	"previousOffset": 20,
+    	"results": [
+    		{
+    			"id": "e1aa2145-1f1f-42c6-957a-46cf9d13adec",
+    			"name": "Product #20",
+    			"description": "Description empty #20",
+    			"isActive": true,
+    			"brand": "jmtp.dev",
+    			"stock": 110,
+    			"price": 22.69
+    		},
+    		// ...
+    	]
     }
     ```
     ##### /api/product/ [POST]
