@@ -11,7 +11,7 @@ const productService = {
       throw new Error(String(error))
     }
   },
-  findAll: async (link: LinkPage): Promise<ResultSetPage<ProductEntity>> => {
+  find: async (link: LinkPage): Promise<ResultSetPage<ProductEntity>> => {
     try {
       const products = await PostgresDataSource
         .getRepository(ProductEntity)

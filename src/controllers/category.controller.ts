@@ -1,11 +1,17 @@
 import { Request, Response, NextFunction } from 'express'
 import { CategoryEntity } from '../entities/category.entity'
 import categoryService from '../services/category.service'
+import { LinkPage } from '../types'
 
 const categoryController = {
-  index: async (_req: Request, res: Response, next: NextFunction) => {
+  index: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const categories = await categoryService.findAll()
+      const link: LinkPage = {
+        offset: req.query.offset !== undefined ? +req.query.offset : 0,
+        limit: req.query.limit !== undefined ? +req.query.limit : 20
+      } as unknown as LinkPage
+
+      const categories = await categoryService.find(link)
       res
         .status(200)
         .json(categories)

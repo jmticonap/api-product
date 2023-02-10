@@ -7,7 +7,7 @@
     "tsc": "tsc",
     "dev": "NODE_ENV=DEV ts-node-dev --respawn --transpile-only src/server.ts",
     "start": "NODE_ENV=PROD node build/src/server.js",
-    "test": "NODE_ENV=TEST jest --watch",
+    "test": "NODE_ENV=TEST jest --verbose --runInBand",
     "lint": "ts-standard"
   },
   "author": "Juan Manuel Ticona Pacheco",

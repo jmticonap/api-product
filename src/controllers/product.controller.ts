@@ -10,7 +10,7 @@ const productController = {
         limit: req.query.limit !== undefined ? +req.query.limit : 20
       } as unknown as LinkPage
 
-      const products = await productService.findAll(link)
+      const products = await productService.find(link)
       res
         .status(200)
         .json(products)

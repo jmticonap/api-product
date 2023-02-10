@@ -2,6 +2,7 @@ import { In, UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../data-source'
 import { CategoryEntity } from '../entities/category.entity'
 import { ProductEntity } from '../entities/product.entity'
+import { LinkPage, ResultSetPage } from '../types'
 
 const categoryService = {
   create: async (category: CategoryEntity): Promise<CategoryEntity> => {
@@ -14,17 +15,34 @@ const categoryService = {
       throw new Error(String(error))
     }
   },
-  findAll: async (): Promise<CategoryEntity[]> => {
+  find: async (link: LinkPage): Promise<ResultSetPage<CategoryEntity>> => {
     try {
       const categories = await PostgresDataSource
         .getRepository(CategoryEntity)
-        .find()
-      return categories
+        .createQueryBuilder()
+        .orderBy('id')
+        .limit(link !== undefined ? link.limit : 20)
+        .offset(link !== undefined ? link.offset : 0)
+        .getMany()
+      const count = await PostgresDataSource
+        .getRepository(CategoryEntity)
+        .createQueryBuilder()
+        .getCount()
+
+      const page: ResultSetPage<CategoryEntity> = {
+        count,
+        limit: link !== undefined ? link.limit : 20,
+        nextOffset: link !== undefined && (link.offset + link.limit) < count ? link.offset + link.limit : link.offset,
+        previousOffset: link !== undefined && link.offset >= link.limit ? link.offset - link.limit : 0,
+        results: categories
+      }
+
+      return page
     } catch (error) {
       throw new Error(String(error))
     }
   },
-  findById: async (id: number): Promise<{}> => {
+  findById: async (id: number): Promise<CategoryEntity> => {
     try {
       const category = await PostgresDataSource
         .getRepository(CategoryEntity)

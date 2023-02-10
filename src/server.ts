@@ -2,7 +2,7 @@ import app from './app'
 import { env } from 'process'
 import { PostgresDataSource } from './data-source'
 import { getCheckedEnvParams } from './helpers'
-import { nitializerDB } from './initializer'
+import { initializeDB } from './initializer'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function main () {
@@ -14,10 +14,12 @@ async function main () {
     : 'localhost'
 
   try {
-    await PostgresDataSource.initialize()
+    if (!PostgresDataSource.isInitialized && getCheckedEnvParams('NODE_ENV') !== 'TEST') {
+      await PostgresDataSource.initialize()
+    }
 
     if (getCheckedEnvParams('NODE_ENV') === 'DEV') {
-      await nitializerDB() // some data for pagination
+      await initializeDB() // some data for pagination
     }
 
     app.listen(PORT, HOSTNAME, () => {

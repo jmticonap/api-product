@@ -1,23 +1,23 @@
 import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../../src/data-source'
 import { ProductEntity } from '../../src/entities/product.entity'
+// import { deleteAllRows } from '../../src/helpers'
 import productService from '../../src/services/product.service'
-
-beforeAll(async () => {
-  if (!PostgresDataSource.isInitialized) {
-    await PostgresDataSource.initialize()
-  }
-  const product = new ProductEntity()
-  product.brand = 'jmtp'
-  product.name = 'Product 001'
-  product.description = 'Generic description'
-  await productService.create(product)
-})
+// import ResultSetPage from '../../src/types.d'
 
 describe('ProductService', () => {
-  test('findAll: Promise<ProductEntity[]>', async () => {
-    const products = await productService.findAll()
-    expect(products).toBeInstanceOf(Array<ProductEntity>)
+  beforeAll(async () => {
+    if (!PostgresDataSource.isInitialized) {
+      await PostgresDataSource.initialize()
+      await PostgresDataSource.synchronize(true)
+      // await deleteAllRows(PostgresDataSource)
+    }
+
+    const product = new ProductEntity()
+    product.brand = 'jmtp'
+    product.name = 'Product 001'
+    product.description = 'Generic description'
+    await productService.create(product)
   })
 
   test('Insert new record', async () => {
@@ -28,6 +28,7 @@ describe('ProductService', () => {
     const newProduct = await productService.create(product)
     expect(newProduct.id).toBeGreaterThan(0)
     expect(newProduct.name).toBe(product.name)
+    return undefined
   })
 
   test('Get product by id=1', async () => {
@@ -35,6 +36,7 @@ describe('ProductService', () => {
     const product = await productService.findById(id)
     expect(product).toBeInstanceOf(ProductEntity)
     expect(product.id).toBe(id)
+    return undefined
   })
 
   test('Update product by id=1', async () => {
@@ -47,5 +49,10 @@ describe('ProductService', () => {
 
     const product = await productService.findById(id)
     expect(product.name).toBe(changes.name)
+    return undefined
+  })
+
+  afterAll(async () => {
+    await PostgresDataSource.destroy()
   })
 })

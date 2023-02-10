@@ -8,7 +8,7 @@ import * as dotenv from 'dotenv'
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
 
 const nodeEnv: string = getCheckedEnvParams('NODE_ENV')
-if (nodeEnv === 'DEV' || nodeEnv === 'TEST') {
+if (['DEV', 'TEST'].includes(nodeEnv)) {
   dotenv.config()
 }
 

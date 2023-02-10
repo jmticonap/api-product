@@ -3,7 +3,7 @@ import { ProductEntity } from './entities/product.entity'
 import categoryService from './services/category.service'
 import productService from './services/product.service'
 
-export const nitializerDB = async (): Promise<void> => {
+export const initializeDB = async (): Promise<void> => {
   for (let i = 1; i <= 10; i++) {
     const category = new CategoryEntity()
     category.name = `Category #${i}`
@@ -20,7 +20,7 @@ export const nitializerDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
-    product.category = Promise.resolve(category1 as CategoryEntity)
+    product.category = Promise.resolve(category1)
 
     await productService.create(product)
   }
@@ -33,7 +33,7 @@ export const nitializerDB = async (): Promise<void> => {
     product.brand = 'jmtp.dev'
     product.price = Math.round((20 + Math.random() * 80) * 100) / 100
     product.stock = Math.round(100 + Math.random() * 100)
-    product.category = Promise.resolve(category2 as CategoryEntity)
+    product.category = Promise.resolve(category2)
 
     await productService.create(product)
   }
