@@ -2,7 +2,8 @@
 import express from 'express'
 import productController from '../controllers/product.controller'
 import apicache from 'apicache'
-import productCreateValidator from '../validators/productCreate.validator'
+
+import validatorHandlers from '../middlewares/validator.middleware'
 
 const route = express.Router()
 
@@ -18,10 +19,10 @@ route.get('/:id', cache('1 minutes'), productController.findById)
 route.get('/by_category/:id', cache('1 minutes'), productController.findByCategory)
 
 // Create new product
-route.post('/', productCreateValidator, productController.create)
+route.post('/', validatorHandlers.productCreate, productController.create)
 
 // Update especific product by id
-route.put('/:id', productController.update)
+route.put('/:id', validatorHandlers.productUpdate, productController.update)
 
 // update the category in especific product
 route.put('/:id/set_category', productController.setCategory)
