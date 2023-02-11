@@ -84,6 +84,7 @@ Finally we are ready to use the app.
 	    "affected": 2
     }
     ```
+
 - ### Product:
     ##### /api/product/ `[GET]`
     Returns a page with 20 results for default but we can use path query "?offset=5&limit=5" to customize the result and get the information paginated.
@@ -197,3 +198,9 @@ Finally we are ready to use the app.
         "message": "DB schema was created successfully"
     }
     ```
+
+## Read access log
+For read the file with the information of access clients we must copy the file from the container to the host. By default the path for  the access lod is `/opt/api-product_access.log`
+```sh
+docker cp  <containerID>:/opt/api-product_access.log /opt/access.log
+```
