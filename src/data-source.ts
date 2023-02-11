@@ -25,7 +25,7 @@ export const dsoPostgres: PostgresConnectionOptions = {
   username,
   password,
   database,
-  synchronize: true,
+  synchronize: nodeEnv !== 'PROD',
   dropSchema: nodeEnv !== 'PROD',
   poolSize: 10,
   entities: [

@@ -92,6 +92,23 @@ const productController = {
         message: 'We can\'t update the product'
       })
     }
+  },
+  setCategory: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params
+      const { categoryId } = req.body
+      const result = await productService.setCategory(id, categoryId)
+
+      res
+        .status(200)
+        .json(result)
+    } catch (error) {
+      next({
+        status: 400,
+        errorContent: error,
+        message: 'We can\'t set the category'
+      })
+    }
   }
 }
 

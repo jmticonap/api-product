@@ -30,7 +30,7 @@ describe('CategoryService', () => {
     category.description = 'Category for uncategorizable products'
 
     const newCategory = await categoryService.create(category)
-    expect(newCategory.id).toBeGreaterThan(0)
+    expect(newCategory.id.length).toBeGreaterThan(0)
     expect(newCategory.name).toBe(category.name)
     return undefined
   })

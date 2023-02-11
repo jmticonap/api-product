@@ -27,6 +27,8 @@ services:
       - DB_PORT=5432
       - DB_HOSTNAME=localhost
       - DB_NAME=api_product_db
+      - LOG_PATH=/opt/api-product_access.log
+      - REMOTE_API=https://retoolapi.dev/WPKpCW/product
     ports:
       - 3000:3000
     network_mode: "host"

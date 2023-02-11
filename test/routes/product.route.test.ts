@@ -18,9 +18,11 @@ describe('Product.route', () => {
       .expect('Content-Type', /json/)
       .expect(200)
   })
-  test('[GET]/api/product/1 : found category 200', async () => {
+  test('[GET]/api/product/<ID> : found category 200', async () => {
+    const response = await request(app).get('/api/product?offset=0&limit=1')
+    const id: string = response.body.results[0].id
     await request(app)
-      .get('/api/product/1')
+      .get(`/api/product/${id}`)
       .expect('Content-Type', /json/)
       .expect(200)
   })

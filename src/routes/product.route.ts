@@ -23,4 +23,7 @@ route.post('/', productCreateValidator, productController.create)
 // Update especific product by id
 route.put('/:id', productController.update)
 
+// update the category in especific product
+route.put('/:id/set_category', productController.setCategory)
+
 export default route

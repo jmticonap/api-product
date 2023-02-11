@@ -2,6 +2,7 @@ import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../data-source'
 import { ProductEntity } from '../entities/product.entity'
 import { LinkPage, ResultSetPage } from '../types'
+import categoryService from './category.service'
 import remoteService from './remote.service'
 
 const productService = {
@@ -148,6 +149,22 @@ const productService = {
         // only local data
         return await productService.find(link)
       }
+    } catch (error) {
+      throw new Error(String(error))
+    }
+  },
+  setCategory: async (productId: string, categoryId: string): Promise<UpdateResult> => {
+    try {
+      const category = await categoryService.findById(categoryId)
+
+      const updatedProduct = await PostgresDataSource
+        .createQueryBuilder()
+        .update(ProductEntity)
+        .set({ category })
+        .where('id = :id', { id: productId })
+        .execute()
+
+      return updatedProduct
     } catch (error) {
       throw new Error(String(error))
     }
