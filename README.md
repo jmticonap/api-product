@@ -166,3 +166,34 @@ Finally we are ready to use the app.
     	"affected": 1
     }
     ```
+    ##### /api/product/`<ID>`/set_category `[PUT]`
+    Allow to set another category for the specific product, sending ID category in the body and the product ID into path.
+    ```json
+    {
+        "categoryId": "15b94647-a24a-4d8f-8ea4-f3cb2584b57b"
+    }
+    ```
+    Answer
+    ```json
+    {
+        "generatedMaps": [],
+        "raw": [],
+        "affected": 1
+    }
+    ```
+
+- ### Utility:
+    ##### /api/utility/initialize_db `[GET]`
+    Insert data into the DB for try out purpose.
+    ```json
+    {
+        "message": "DB initialize with data for try out purpose"
+    }
+    ```
+    ##### /api/utility/create_schemea_db `[GET]`
+    Drop all the schema and create another from the entities with no data in them.
+    ```json
+    {
+        "message": "DB schema was created successfully"
+    }
+    ```
