@@ -5,6 +5,7 @@ import { initializeDB } from '../../src/initializer'
 
 describe('Product.route', () => {
   beforeAll(async () => {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (!PostgresDataSource.isInitialized) {
       await PostgresDataSource.initialize()
       await PostgresDataSource.synchronize(true)

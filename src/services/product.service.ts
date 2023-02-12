@@ -8,7 +8,10 @@ import remoteService from './remote.service'
 const productService = {
   create: async (product: ProductEntity): Promise<ProductEntity> => {
     try {
-      return await PostgresDataSource.getRepository(ProductEntity).save(product)
+      product = await PostgresDataSource
+        .getRepository(ProductEntity)
+        .save(product)
+      return product
     } catch (error) {
       throw new Error(String(error))
     }

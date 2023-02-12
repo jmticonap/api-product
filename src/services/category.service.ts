@@ -68,7 +68,7 @@ const categoryService = {
       throw new Error(String(error))
     }
   },
-  addProducts: async (id: string, productIds: string[]): Promise<{}> => {
+  addProducts: async (id: string, productIds: string[]): Promise<{ affected: number }> => {
     try {
       const products: ProductEntity[] = await PostgresDataSource
         .getRepository(ProductEntity)
