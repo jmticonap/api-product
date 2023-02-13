@@ -114,7 +114,7 @@ describe('ProductService', () => {
     const findProduct = productService.findById(product.id)
 
     expect(result.affected).toBe(1)
-    expect((await findProduct).id).toBe(category.id)
+    expect((await (await findProduct).category).id).toBe(category.id)
 
     return undefined
   })
