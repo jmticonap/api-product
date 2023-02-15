@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { CategoryEntity } from './category.entity'
+import { CategoryFeatureEntity } from './categoryFeature.entity'
+import { ProductFeatureEntity } from './productFeature.entity'
 
 @Entity('product')
 export class ProductEntity {
@@ -51,4 +53,11 @@ export class ProductEntity {
   )
   @JoinColumn({ name: 'categoryid' })
   category!: Promise<CategoryEntity>
+
+  @OneToMany(
+    () => ProductFeatureEntity,
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
+    (productFeature) => productFeature.product
+  )
+  features!: Promise<CategoryFeatureEntity[]>
 }

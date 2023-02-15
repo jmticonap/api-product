@@ -4,3 +4,5 @@ coverage/
 coverage/**
 *-lock.json
 access.log
+*_ssh-*
+data/

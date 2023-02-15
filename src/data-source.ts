@@ -6,6 +6,9 @@ import { CategoryEntity } from './entities/category.entity'
 
 import * as dotenv from 'dotenv'
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
+import { FeatureEntity } from './entities/feature.entity'
+import { CategoryFeatureEntity } from './entities/categoryFeature.entity'
+import { ProductFeatureEntity } from './entities/productFeature.entity'
 
 const nodeEnv: string = getCheckedEnvParams('NODE_ENV')
 if (['DEV', 'TEST'].includes(nodeEnv)) {
@@ -30,7 +33,10 @@ export const dsoPostgres: PostgresConnectionOptions = {
   poolSize: 10,
   entities: [
     ProductEntity,
-    CategoryEntity
+    CategoryEntity,
+    FeatureEntity,
+    CategoryFeatureEntity,
+    ProductFeatureEntity
   ]
 }
 
