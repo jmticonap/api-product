@@ -17,3 +17,9 @@ export interface ResultSetPage<T> {
   previousOffset: number
   results: T[]
 }
+
+export interface CreateCategoryFeature {
+  categoryId: string
+  featureId: string
+  contentType: string
+}
