@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
+import { AbstractEntity } from './abstract.entity'
 import { CategoryEntity } from './category.entity'
 import { FeatureEntity } from './feature.entity'
 
 @Entity('category_feature')
-export class CategoryFeatureEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string
-
+export class CategoryFeatureEntity extends AbstractEntity {
   @Column({
     nullable: false,
     name: 'content_type'
