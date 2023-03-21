@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from 'express'
 import { CategoryEntity } from '../entities/category.entity'
 import categoryService from '../services/category.service'
-import { LinkPage } from '../types'
+import { PaginatorQueryData } from '../types'
 
 const categoryController = {
   index: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const link: LinkPage = {
+      const link: PaginatorQueryData = {
         offset: req.query.offset !== undefined ? +req.query.offset : 0,
         limit: req.query.limit !== undefined ? +req.query.limit : 20
-      } as unknown as LinkPage
+      } as unknown as PaginatorQueryData
 
       const categories = await categoryService.find(link)
       res

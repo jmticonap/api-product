@@ -5,7 +5,7 @@ export interface Error {
   message: string
 }
 
-export interface LinkPage {
+export interface PaginatorQueryData {
   offset: number
   limit: number
 }

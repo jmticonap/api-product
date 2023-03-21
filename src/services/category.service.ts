@@ -2,7 +2,8 @@ import { In, UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../data-source'
 import { CategoryEntity } from '../entities/category.entity'
 import { ProductEntity } from '../entities/product.entity'
-import { LinkPage, ResultSetPage } from '../types'
+import { PaginatorQueryData, ResultSetPage } from '../types'
+import { getLimitQuery, getOffsetQuery, calculateNextOffset, calculatePreviousOffset } from '../helpers'
 
 const categoryService = {
   create: async (category: CategoryEntity): Promise<CategoryEntity> => {
@@ -15,14 +16,14 @@ const categoryService = {
       throw new Error(String(error))
     }
   },
-  find: async (link: LinkPage): Promise<ResultSetPage<CategoryEntity>> => {
+  find: async (link: PaginatorQueryData): Promise<ResultSetPage<CategoryEntity>> => {
     try {
       const categories = await PostgresDataSource
         .getRepository(CategoryEntity)
         .createQueryBuilder()
         .orderBy('id')
-        .limit(link !== undefined ? link.limit : 20)
-        .offset(link !== undefined ? link.offset : 0)
+        .limit(getLimitQuery(link))
+        .offset(getOffsetQuery(link))
         .getMany()
       const count = await PostgresDataSource
         .getRepository(CategoryEntity)
@@ -31,9 +32,9 @@ const categoryService = {
 
       const page: ResultSetPage<CategoryEntity> = {
         count,
-        limit: link !== undefined ? link.limit : 20,
-        nextOffset: link !== undefined && (link.offset + link.limit) < count ? link.offset + link.limit : link.offset,
-        previousOffset: link !== undefined && link.offset >= link.limit ? link.offset - link.limit : 0,
+        limit: getLimitQuery(link),
+        nextOffset: calculateNextOffset(link, count),
+        previousOffset: calculatePreviousOffset(link),
         results: categories
       }
 

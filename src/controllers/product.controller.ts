@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
 import productService from '../services/product.service'
-import { LinkPage } from '../types'
+import { PaginatorQueryData } from '../types'
 
 const productController = {
   index: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const link: LinkPage = {
+      const link: PaginatorQueryData = {
         offset: req.query.offset !== undefined ? +req.query.offset : 0,
         limit: req.query.limit !== undefined ? +req.query.limit : 20
-      } as unknown as LinkPage
+      } as unknown as PaginatorQueryData
 
       // The process search in local DB and remote service
       const products = await productService.findGlobaly(link)
@@ -41,10 +41,10 @@ const productController = {
   findByCategory: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params
-      const link: LinkPage = {
+      const link: PaginatorQueryData = {
         offset: req.query.offset !== undefined ? +req.query.offset : 0,
         limit: req.query.limit !== undefined ? +req.query.limit : 20
-      } as unknown as LinkPage
+      } as unknown as PaginatorQueryData
 
       const page = await productService.findByCategory(id, link)
 

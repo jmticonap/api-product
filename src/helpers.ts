@@ -1,6 +1,7 @@
 import { env } from 'process'
 import { validationResult } from 'express-validator'
 import { Request, Response, NextFunction } from 'express'
+import { PaginatorQueryData } from './types'
 
 export const getCheckedEnvParams = (paramName: string): string => {
   if (paramName.length === 0) {
@@ -42,4 +43,39 @@ export const bodyCleaner = (req: Request, updatableFields: string[]): Request =>
   }
 
   return req
+}
+
+// Services Query utilities
+export const getLimitQuery = (link: PaginatorQueryData): number => {
+  if (link !== undefined) {
+    return link.limit
+  } else {
+    return 20
+  }
+}
+
+export const getOffsetQuery = (link: PaginatorQueryData): number => {
+  if (link !== undefined) {
+    return link.offset
+  } else {
+    return 0
+  }
+}
+
+export const calculateNextOffset = (link: PaginatorQueryData, count: number): number => {
+  if (link !== undefined &&
+    link.offset + link.limit < count) {
+    return link.offset + link.limit
+  } else {
+    return link.offset
+  }
+}
+
+export const calculatePreviousOffset = (link: PaginatorQueryData): number => {
+  if (link !== undefined &&
+    link.offset >= link.limit) {
+    return link.offset - link.limit
+  } else {
+    return 0
+  }
 }

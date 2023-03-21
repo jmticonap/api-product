@@ -1,9 +1,10 @@
 import { UpdateResult } from 'typeorm'
 import { PostgresDataSource } from '../data-source'
 import { ProductEntity } from '../entities/product.entity'
-import { LinkPage, ResultSetPage } from '../types'
+import { PaginatorQueryData, ResultSetPage } from '../types'
 import categoryService from './category.service'
 import remoteService from './remote.service'
+import { getLimitQuery, getOffsetQuery, calculateNextOffset, calculatePreviousOffset } from '../helpers'
 
 const productService = {
   create: async (product: ProductEntity): Promise<ProductEntity> => {
@@ -11,6 +12,7 @@ const productService = {
       product = await PostgresDataSource
         .getRepository(ProductEntity)
         .save(product)
+
       return product
     } catch (error) {
       throw new Error(String(error))
@@ -29,15 +31,15 @@ const productService = {
       throw new Error(String(error))
     }
   },
-  find: async (link: LinkPage): Promise<ResultSetPage<ProductEntity>> => {
+  find: async (link: PaginatorQueryData): Promise<ResultSetPage<ProductEntity>> => {
     try {
       const products = await PostgresDataSource
         .getRepository(ProductEntity)
         .createQueryBuilder()
         .orderBy('id')
         .where('isactive = :active', { active: true })
-        .limit(link !== undefined ? link.limit : 20)
-        .offset(link !== undefined ? link.offset : 0)
+        .limit(getLimitQuery(link))
+        .offset(getOffsetQuery(link))
         .getMany()
       const count = await PostgresDataSource
         .getRepository(ProductEntity)
@@ -47,9 +49,9 @@ const productService = {
 
       const page: ResultSetPage<ProductEntity> = {
         count,
-        limit: link !== undefined ? link.limit : 20,
-        nextOffset: link !== undefined && (link.offset + link.limit) < count ? link.offset + link.limit : link.offset,
-        previousOffset: link !== undefined && link.offset >= link.limit ? link.offset - link.limit : 0,
+        limit: getLimitQuery(link),
+        nextOffset: calculateNextOffset(link, count),
+        previousOffset: calculatePreviousOffset(link),
         results: products
       }
 
@@ -72,7 +74,7 @@ const productService = {
       throw new Error(String(error))
     }
   },
-  findByCategory: async (id: string, link: LinkPage): Promise<ResultSetPage<ProductEntity>> => {
+  findByCategory: async (id: string, link: PaginatorQueryData): Promise<ResultSetPage<ProductEntity>> => {
     try {
       const products = await PostgresDataSource
         .getRepository(ProductEntity)
@@ -116,7 +118,7 @@ const productService = {
       throw new Error(String(error))
     }
   },
-  findGlobaly: async (link: LinkPage): Promise<ResultSetPage<ProductEntity>> => {
+  findGlobaly: async (link: PaginatorQueryData): Promise<ResultSetPage<ProductEntity>> => {
     try {
       const localCount = await productService.count()
       const remoteCount = await remoteService.count()
